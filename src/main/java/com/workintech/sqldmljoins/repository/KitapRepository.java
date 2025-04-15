@@ -9,12 +9,12 @@ import java.util.List;
 public interface KitapRepository extends JpaRepository<Kitap, Long> {
 
     //Dram ve Hikaye türündeki kitapları listeleyin. JOIN kullanmadan yapın.
-    String QUESTION_1 = "SELECT * FROM kitap WHERE turno IN (SELECT turno FROM tur WHERE turadi IN ('Dram', 'Hikaye'))";
+    String QUESTION_1 = "SELECT k.  * FROM kitap k, tur t WHERE k.turno=t.turno and t.ad IN ('Dram', 'Hikaye')";
     @Query(value = QUESTION_1, nativeQuery = true)
     List<Kitap> findBooks();
 
 
-    String QUESTION_10 = "SELECT O.ad, o.soyad, COUNT(i.islemno) AS kitap_sayisi FROM ogrenci o LEFT JOIN islem i ON p.ogrnno GROUP BY o.ad, o.soyad";
+    String QUESTION_10 = "SELECT AVG(k.puan) FROM kitap k";
     @Query(value = QUESTION_10, nativeQuery = true)
     Double findAvgPointOfBooks();
 
